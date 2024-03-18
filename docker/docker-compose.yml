@@ -1,0 +1,58 @@
+version: '3.9'
+services:
+  directus:
+    image: directus/directus:10.10.4
+    container_name: temp_directus
+    ports:
+      - 8058:8055
+    environment:
+      ADMIN_EMAIL: "admin@directus.com"
+      ADMIN_PASSWORD: "woa8cget3ifagtzm6f3uolx3z2"
+      KEY: '4c312444-dc05-4c27-b6ad-8166e04f4336'
+      SECRET: '1ddbd64c-e6b0-488b-91c6-1f688c7ac336'
+      DB_CLIENT: 'pg'
+      DB_HOST: 'postgres'
+      DB_PORT: '5432'
+      DB_DATABASE: 'directus'
+      DB_USER: 'directus'
+      DB_PASSWORD: 'directus'
+      EXTENSIONS_AUTO_RELOAD: 'true'
+      LOG_LEVEL: "debug"
+      LOG_STYLE: "pretty"
+      ASSETS_TRANSFORM_IMAGE_MAX_DIMENSION: "10000"
+    volumes:
+      - ./data/directus/volumes/database:/directus/database
+      - ./data/directus/volumes/uploads:/directus/uploads
+      - ./data/directus/extensions:/directus/extensions
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16.2-alpine
+    container_name: temp_postgres
+    ports:
+      - 5438:5432
+    environment:
+      POSTGRES_DB: directus
+      POSTGRES_USER: directus
+      POSTGRES_PASSWORD: directus
+    volumes:
+      - ./data/postgres/volumes/data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2.4-alpine
+    container_name: temp_redis
+    ports:
+      - 6388:6379
+    volumes:
+      - ./data/redis/volumes/data:/data
+
+  nats:
+    image: nats:2.10.12-alpine
+    container_name: temp_nats
+    # volumes:
+    #   - ./data/nats/config/:/etc/nats
+    ports:
+      - "4222:4222"
+      - "6222:6222"
+      - "8222:8222"

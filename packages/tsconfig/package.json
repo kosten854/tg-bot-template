@@ -1,0 +1,7 @@
+{
+  "name": "@application/tsconfig",
+  "type": "module",
+  "devDependencies": {
+    "core-dts": "^0.0.3"
+  }
+}

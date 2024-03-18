@@ -1,0 +1,7 @@
+{
+  "extends": "@application/tsconfig/tsconfig.node.json",
+  "include": [
+    "src/**/*.ts",
+    "index.ts"
+  ]
+}

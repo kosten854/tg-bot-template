@@ -1,0 +1,25 @@
+{
+  "name": "@application/tg-bot",
+  "type": "module",
+  "scripts": {
+    "start": "tsx ./index.ts",
+    "dev": "tsx --watch --env-file .env.local  ./index.ts",
+    "lint-code": "eslint . --cache --fix",
+    "lint-type": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@application/config-service": "workspace:*",
+    "@application/logger": "workspace:*",
+    "@application/metrics": "workspace:*",
+    "@fastify/awilix": "^5.1.0",
+    "fastify": "^4.26.2",
+    "inversify": "^6.0.2",
+    "nats": "^2.19.0",
+    "reflect-metadata": "^0.2.1"
+  },
+  "devDependencies": {
+    "@application/eslint": "workspace:*",
+    "@application/tsconfig": "workspace:*",
+    "tsx": "^4.7.1"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "typescript-project-template",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.4.2"
+  },
+  "packageManager": "pnpm@8.15.4"
+}

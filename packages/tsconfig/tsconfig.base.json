@@ -1,0 +1,87 @@
+{
+  "compilerOptions": {
+    /** Проверка типа. **/
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "strict": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+
+    /** Модули. */
+    "allowArbitraryExtensions": true,
+    "allowImportingTsExtensions": true,
+    "allowUmdGlobalAccess": false,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "resolvePackageJsonExports": true,
+    "resolvePackageJsonImports": true,
+
+    /** Сборка. */
+    "declaration": true,
+    "declarationMap": true,
+    "newLine": "LF",
+    "noEmit": true,
+    "outDir": "dist",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+
+    /** Поддержка JavaScript. */
+    "allowJs": false,
+    "checkJs": false,
+
+    /** Поддержка редактора. */
+    "disableSizeLimit": true,
+
+    /** Ограничения взаимодействия. */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    /** Удаляем пустые импорты, т.к. предполагаем, что модули не имеют сайд эффектов. */
+    "verbatimModuleSyntax": false,
+
+    /** Обратная совместимость. */
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+    "suppressExcessPropertyErrors": false,
+    "suppressImplicitAnyIndexErrors": false,
+
+    /** Язык и окружающая среда. */
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "jsx": "preserve",
+    "moduleDetection": "force",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+
+    /** Проекты. */
+    "composite": true,
+    "disableReferencedProjectLoad": false,
+    "disableSolutionSearching": false,
+    "disableSourceOfProjectReferenceRedirect": false,
+    "incremental": true,
+
+    /** Форматирование вывода. */
+    "noErrorTruncation": true,
+    "pretty": true,
+
+    /** Полнота. */
+    "skipLibCheck": true
+  }
+}
