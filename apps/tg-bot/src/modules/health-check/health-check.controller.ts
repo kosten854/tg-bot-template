@@ -1,7 +1,9 @@
 import {
   Logger,
 } from '@application/logger'
-import {type RouteHandlerMethod} from 'fastify'
+import {
+  type RouteHandlerMethod,
+} from 'fastify'
 import {
   inject,
   injectable,
@@ -18,9 +20,7 @@ import {
 export class HealthCheckController {
   constructor(
     @inject(InversifyTypes.APP_LOGGER) @tagged('name', 'HealthCheckController') private readonly logger: Logger,
-  ) {
-    this.logger.warn('HealthCheckController constructed')
-  }
+  ) {}
 
   @Route('get', '/health-check')
   public getHealthCheck(): RouteHandlerMethod {

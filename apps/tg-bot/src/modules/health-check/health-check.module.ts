@@ -6,7 +6,5 @@ import {
 } from 'inversify'
 
 export const HealthCheckModule = new ContainerModule((bind) => {
-  bind<HealthCheckController>(HealthCheckController)
-    .to(HealthCheckController)
-    .inSingletonScope()
+  bind<HealthCheckController>(HealthCheckController).toSelf().inSingletonScope()
 })

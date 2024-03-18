@@ -9,16 +9,30 @@ import {
   prometheusContentType,
 } from '@application/metrics'
 import {
+  Bot as TelegramBot,
+} from 'grammy'
+import {
   Container,
   ContainerModule,
   type interfaces,
 } from 'inversify'
 import {
+  type NatsConnection,
+  connect as natsConnect,
+} from 'nats'
+import {
   InversifyTypes,
 } from '@/constants/inversify-types.js'
 import {
   HealthCheckModule,
-} from '@/modules/health-check/health-check.module.ts'
+} from '@/modules/health-check/health-check.module.js'
+import {
+  NatsModule,
+} from '@/modules/nats/nats.module.js'
+import {
+  NatsService,
+} from '@/modules/nats/nats.service.js'
+import {TelegramModule} from '@/modules/telegram/telegram.module.js'
 import {
   TgBotHttpServer,
 } from '@/server.js'
@@ -32,6 +46,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
 const appBinding = new ContainerModule((bind) => {
   bind<ConfigService>(ConfigService).to(ConfigService).inSingletonScope()
   bind<TgBotHttpServer>(TgBotHttpServer).to(TgBotHttpServer).inSingletonScope()
+  bind<NatsService>(NatsService).to(NatsService).inSingletonScope()
 })
 
 const bootstrap = async (): Promise<void> => {
@@ -63,12 +78,31 @@ const bootstrap = async (): Promise<void> => {
 
   const logger = appContainer.getTagged<Logger>(InversifyTypes.APP_LOGGER, 'name', 'TgBot')
 
+  // NATS connection
+  const nats = await natsConnect(configService.natsOptions)
+  appContainer
+    .bind<NatsConnection>(InversifyTypes.NATS)
+    .toConstantValue(nats)
+
+  const bot = new TelegramBot(configService.telegramBotToken, configService.telegramBotOptions)
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  await bot.api.setWebhook(`${configService.telegramWebhookUrl}/telegram/webhook`, {secret_token: configService.telegramWebhookSecret})
+  appContainer
+    .bind<TelegramBot>(InversifyTypes.TELEGRAM_BOT)
+    .toConstantValue(bot)
+  bot.hears('/start', (ctx) => ctx.reply('Welcome!'))
+
   logger.info('APPLICATION STARTED')
 
   // load modules
-  appContainer.load(HealthCheckModule)
+  appContainer.load(
+    HealthCheckModule,
+    NatsModule,
+    TelegramModule,
+  )
 
   const app = await appContainer.getAsync<TgBotHttpServer>(TgBotHttpServer)
+
   await app.startServer()
 
   if (configService.enabledMetricsServer) {

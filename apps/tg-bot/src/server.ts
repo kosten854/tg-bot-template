@@ -6,6 +6,10 @@ import {
   HealthCheckController,
 } from './modules/health-check/health-check.controller.ts'
 import {
+  TelegramController,
+} from './modules/telegram/telegram.controller.js'
+import {type MethodReturnInterface} from './types/controller.js'
+import {
   Logger,
 } from '@application/logger'
 import {
@@ -32,6 +36,7 @@ export class TgBotHttpServer {
   constructor(
     @inject(ConfigService) private readonly configService: ConfigService,
     @inject(HealthCheckController) private readonly healthCheckController: HealthCheckController,
+    @inject(TelegramController) private readonly telegramController: TelegramController,
     @inject(InversifyTypes.APP_LOGGER) @tagged('name', 'TgBotHttpServer') private readonly logger: Logger,
   ) {
     this.server = this.createServer()
@@ -54,7 +59,11 @@ export class TgBotHttpServer {
 
   @postConstruct()
   public createRequestHandler(): void {
-    const routes = getAllRoutes(this.healthCheckController)
+    const routes: MethodReturnInterface[] = []
+    routes.push(
+      ...getAllRoutes(this.healthCheckController),
+      ...getAllRoutes(this.telegramController),
+    )
     // подтянуть остальные контроллеры
     for (const route of routes) {
       this.server.route(route)

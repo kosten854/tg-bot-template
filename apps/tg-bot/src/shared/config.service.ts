@@ -9,10 +9,19 @@ import {
   type FastifyListenOptions,
 } from 'fastify'
 import {
+  type BotConfig,
+  type Context as BotContext,
+} from 'grammy'
+import {
   decorate,
   injectable,
 } from 'inversify'
-import {type Server} from 'node:http'
+import {
+  type ConnectionOptions,
+} from 'nats'
+import {
+  type Server,
+} from 'node:http'
 
 decorate(injectable(), BaseConfigService)
 @injectable()
@@ -37,5 +46,30 @@ export class ConfigService extends BaseConfigService {
       connectionTimeout: 120_000,
       requestTimeout: 120_000,
     }
+  }
+
+  public get natsOptions(): ConnectionOptions {
+    return {
+      servers: this.getRequired('NATS_SERVER'),
+      debug: this.getBoolean('NATS_DEBUG'),
+      reconnect: true,
+      waitOnFirstConnect: true,
+    }
+  }
+
+  public get telegramBotToken(): string {
+    return this.getRequired('TELEGRAM_BOT_TOKEN')
+  }
+
+  public get telegramBotOptions(): BotConfig<BotContext> {
+    return {}
+  }
+
+  public get telegramWebhookSecret(): string {
+    return this.getRequired('TELEGRAM_WEBHOOK_SECRET')
+  }
+
+  public get telegramWebhookUrl(): string {
+    return this.getRequired('TELEGRAM_WEBHOOK_URL')
   }
 }
