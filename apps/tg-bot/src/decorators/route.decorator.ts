@@ -9,7 +9,7 @@
 import {
   type HTTPMethods,
 } from 'fastify'
-import {type MethodReturnInterface} from '@/types/controller.js'
+import {type MethodReturnInterface} from '@/types/controller.ts'
 
 export function Route(method: HTTPMethods, url: `/${string}`): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {

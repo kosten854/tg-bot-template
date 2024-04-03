@@ -1,7 +1,7 @@
 import {
   type StreamOptions,
   StreamTypes,
-} from './types.js'
+} from './types.ts'
 import {
   type Level,
   type LogDescriptor,

@@ -50,9 +50,44 @@ services:
   nats:
     image: nats:2.10.12-alpine
     container_name: temp_nats
+    command: ["nats-server", "--jetstream"]
+    # volumes:
+      # - ./data/nats/volumes/store:/var/lib/nats
     # volumes:
     #   - ./data/nats/config/:/etc/nats
     ports:
       - "4222:4222"
       - "6222:6222"
       - "8222:8222"
+
+  # bot:
+  #   build:
+  #     context: ../
+  #     dockerfile: ./docker/tg-bot/Dockerfile
+  #   container_name: temp_bot
+  #   environment:
+  #     ENV_PREFIX: TG_BOT_
+  #     TG_BOT_NODE_ENV: development
+  #     TG_BOT_PORT: 3000
+  #     TG_BOT_HOST: 0.0.0.0
+  #     # LOGGER
+  #     TG_BOT_LOG_LEVEL: debug
+  #     TG_BOT_LOG_HTTP_ENABLED: true
+  #     TG_BOT_LOG_PRETTY: true
+  #     TG_BOT_LOG_SENTRY_DSN: 
+  #     # METRICS
+  #     TG_BOT_METRICS_PORT: 9091
+  #     TG_BOT_METRICS_HOST: 0.0.0.0
+  #     TG_BOT_METRICS_PATH: /metrics
+  #     # NATS
+  #     TG_BOT_NATS_SERVER: http://nats:4222
+  #     TG_BOT_NATS_DEBUG: true
+  #     # TG_BOT_NATS_DEBUG=false
+  #     # TELEGRAM
+  #     TG_BOT_TELEGRAM_BOT_TOKEN: 7020962157:AAFbXjGnWcU4LTVyHlA-nZ4Px1xd7XetPJk
+  #     TG_BOT_TELEGRAM_WEBHOOK_SECRET: epaa4khhsg72288i82vpcch7jux
+  #     TG_BOT_TELEGRAM_WEBHOOK_URL: https://telegram.johnsmith.keenetic.pro
+
+  #   ports:
+  #     - 3000:3000
+  #     - 9091:9091

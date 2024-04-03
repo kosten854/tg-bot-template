@@ -1,3 +1,3 @@
-export {MetricsService} from './src/metrics.service.js'
-export {MetricsServer} from './src/metrics.server.js'
-export * from './src/types.js'
+export {MetricsService} from './src/metrics.service.ts'
+export {MetricsServer} from './src/metrics.server.ts'
+export * from './src/types.ts'

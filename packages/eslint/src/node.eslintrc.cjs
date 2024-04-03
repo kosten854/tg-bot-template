@@ -15,6 +15,8 @@ module.exports = merge(
       '@typescript-eslint/eslint-plugin',
     ],
     rules: {
+      'no-continue': 'off',
+      'no-plusplus': 'off',
       '@typescript-eslint/brace-style': ['error', '1tbs', {
         allowSingleLine: false,
       }],

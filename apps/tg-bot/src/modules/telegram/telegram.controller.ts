@@ -18,7 +18,9 @@ import {
 import {
   Route,
 } from '@/decorators/route.decorator.ts'
-import {ConfigService} from '@/shared/config.service.ts'
+import {
+  ConfigService,
+} from '@/shared/config.service.ts'
 
 @injectable()
 export class TelegramController {

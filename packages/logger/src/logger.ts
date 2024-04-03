@@ -2,24 +2,24 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import {
   createConsoleStream,
-} from './console-stream.js'
+} from './console-stream.ts'
 import {
   createPrettyStream,
-} from './pretty-stream.js'
+} from './pretty-stream.ts'
 import {
   createSentryBrowserStream,
-} from './sentry-browser-stream.js'
+} from './sentry-browser-stream.ts'
 import {
   createSentryNodeStream,
-} from './sentry-node-stream.js'
+} from './sentry-node-stream.ts'
 import {
   createStdStream,
-} from './std-stream.js'
+} from './std-stream.ts'
 import {
   type LoggerConfig,
   type LoggerOptions,
   type StreamOptions,
-} from './types.js'
+} from './types.ts'
 import SentryBrowser from '@sentry/browser'
 import SentryNode from '@sentry/node'
 import {

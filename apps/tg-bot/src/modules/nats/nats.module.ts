@@ -6,5 +6,5 @@ import {
 } from 'inversify'
 
 export const NatsModule = new ContainerModule((bind) => {
-  bind<NatsService>(NatsService).toSelf()
+  bind<NatsService>(NatsService).toSelf().inSingletonScope()
 })

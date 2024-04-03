@@ -1,13 +1,13 @@
 import {
   ExtendedError,
-} from './extended-error.js'
+} from './extended-error.ts'
 import {
   convertPinoLevelToSentrySeverityLevel,
-} from './severity.js'
+} from './severity.ts'
 import {
   type StreamOptions,
   StreamTypes,
-} from './types.js'
+} from './types.ts'
 import Sentry, {
   type BrowserOptions,
 } from '@sentry/browser'

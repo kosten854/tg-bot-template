@@ -1,6 +1,6 @@
 import {
   type MetricsService,
-} from './metrics.service.js'
+} from './metrics.service.ts'
 import {
   type FastifyHttpOptions,
   type FastifyInstance,
@@ -27,7 +27,7 @@ export class MetricsServer {
           .status(200)
           .send(await this.metricsService.getMetrics())
       })
-      .get(`${path}.json`, async (request, reply) => {
+      .get(`${path}.tson`, async (request, reply) => {
         return reply
           .type('application/json')
           .status(200)

@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "start": "tsx ./index.ts",
-    "dev": "tsx --watch --env-file .env.local  ./index.ts",
+    "dev": "tsx --watch --env-file .env.local   ./index.ts",
+    "test": "tsx --watch --env-file .env.local   ./test.ts",
     "lint-code": "eslint . --cache --fix",
     "lint-type": "tsc --noEmit"
   },
@@ -16,11 +17,14 @@
     "grammy": "^1.21.1",
     "inversify": "^6.0.2",
     "nats": "^2.19.0",
-    "reflect-metadata": "^0.2.1"
+    "reflect-metadata": "^0.2.1",
+    "ts-pattern": "^5.1.0"
   },
   "devDependencies": {
     "@application/eslint": "workspace:*",
     "@application/tsconfig": "workspace:*",
-    "tsx": "^4.7.1"
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.2"
   }
 }

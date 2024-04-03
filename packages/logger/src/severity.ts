@@ -1,9 +1,9 @@
 import {
+  NumLevel,
+} from './types.ts'
+import {
   type SeverityLevel,
 } from '@sentry/node'
-import {
-  NumLevel,
-} from './types.js'
 
 const severityMap = new Map<NumLevel, SeverityLevel>([
   [NumLevel.TRACE, 'debug'],

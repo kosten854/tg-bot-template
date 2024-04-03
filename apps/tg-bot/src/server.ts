@@ -1,14 +1,16 @@
 /* eslint-disable no-continue */
 import {
   getAllRoutes,
-} from './decorators/route.decorator.js'
+} from './decorators/route.decorator.ts'
 import {
   HealthCheckController,
 } from './modules/health-check/health-check.controller.ts'
 import {
   TelegramController,
-} from './modules/telegram/telegram.controller.js'
-import {type MethodReturnInterface} from './types/controller.js'
+} from './modules/telegram/telegram.controller.ts'
+import {
+  type MethodReturnInterface,
+} from './types/controller.ts'
 import {
   Logger,
 } from '@application/logger'
@@ -24,10 +26,10 @@ import {
 } from 'inversify'
 import {
   InversifyTypes,
-} from '@/constants/inversify-types.js'
+} from '@/constants/inversify-types.ts'
 import {
   ConfigService,
-} from '@/shared/config.service.js'
+} from '@/shared/config.service.ts'
 
 @injectable()
 export class TgBotHttpServer {

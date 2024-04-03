@@ -22,23 +22,24 @@ import {
 } from 'nats'
 import {
   InversifyTypes,
-} from '@/constants/inversify-types.js'
+} from '@/constants/inversify-types.ts'
 import {
   HealthCheckModule,
-} from '@/modules/health-check/health-check.module.js'
+} from '@/modules/health-check/health-check.module.ts'
 import {
   NatsModule,
-} from '@/modules/nats/nats.module.js'
+} from '@/modules/nats/nats.module.ts'
 import {
   NatsService,
-} from '@/modules/nats/nats.service.js'
-import {TelegramModule} from '@/modules/telegram/telegram.module.js'
+} from '@/modules/nats/nats.service.ts'
+import {TelegramModule} from '@/modules/telegram/telegram.module.ts'
+import {TelegramUpdate} from '@/modules/telegram/telegram.update.ts'
 import {
   TgBotHttpServer,
-} from '@/server.js'
+} from '@/server.ts'
 import {
   ConfigService,
-} from '@/shared/config.service.js'
+} from '@/shared/config.service.ts'
 
 /** @see https://stackoverflow.com/questions/51995925/node-fetch-request-fails-on-server-unable-to-get-local-issuer-certificate */
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
@@ -46,12 +47,16 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
 const appBinding = new ContainerModule((bind) => {
   bind<ConfigService>(ConfigService).to(ConfigService).inSingletonScope()
   bind<TgBotHttpServer>(TgBotHttpServer).to(TgBotHttpServer).inSingletonScope()
-  bind<NatsService>(NatsService).to(NatsService).inSingletonScope()
 })
 
 const bootstrap = async (): Promise<void> => {
   const appContainer = new Container()
-  appContainer.load(appBinding)
+  appContainer.load(
+    appBinding,
+    HealthCheckModule,
+    NatsModule,
+    TelegramModule,
+  )
 
   const configService = appContainer.get<ConfigService>(ConfigService)
 
@@ -84,22 +89,21 @@ const bootstrap = async (): Promise<void> => {
     .bind<NatsConnection>(InversifyTypes.NATS)
     .toConstantValue(nats)
 
+  // Telegram bot
   const bot = new TelegramBot(configService.telegramBotToken, configService.telegramBotOptions)
   // eslint-disable-next-line @typescript-eslint/naming-convention
   await bot.api.setWebhook(`${configService.telegramWebhookUrl}/telegram/webhook`, {secret_token: configService.telegramWebhookSecret})
   appContainer
     .bind<TelegramBot>(InversifyTypes.TELEGRAM_BOT)
     .toConstantValue(bot)
-  bot.hears('/start', (ctx) => ctx.reply('Welcome!'))
 
-  logger.info('APPLICATION STARTED')
+  logger.info('APPLICATION CONTAINER INITIALIZED')
 
-  // load modules
-  appContainer.load(
-    HealthCheckModule,
-    NatsModule,
-    TelegramModule,
-  )
+  const botUpdate = appContainer.get<TelegramUpdate>(TelegramUpdate)
+  botUpdate.init()
+
+  const natsService = appContainer.get<NatsService>(NatsService)
+  void natsService.runWorker()
 
   const app = await appContainer.getAsync<TgBotHttpServer>(TgBotHttpServer)
 

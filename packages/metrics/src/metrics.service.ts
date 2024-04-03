@@ -1,6 +1,6 @@
 import {
   type MetricsOptions,
-} from './types.js'
+} from './types.ts'
 import client, {
   type Metric,
   Registry,
