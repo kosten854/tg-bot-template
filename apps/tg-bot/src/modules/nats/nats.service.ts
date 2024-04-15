@@ -119,6 +119,7 @@ export class NatsService {
           return acc
         }, [])
         for (const message of messages) {
+          console.log('🚀 ~ NatsService ~ runWorker ~ message:', message)
           await this.sendToBot(message)
           await setTimeout(40)
         }
@@ -159,6 +160,8 @@ export class NatsService {
       if (result instanceof Error && result.message.includes('429')) {
         this.logger.error(result, result.message)
         await this.sendToBot(message, 4000, tryCount - 1)
+      } else if (result instanceof Error) {
+        this.logger.error(result, result.message)
       }
     }
   }
@@ -183,7 +186,7 @@ export class NatsService {
   }
 
   private decode<T extends object>(data: string): T {
-    return JSON.parse(atob(data))
+    return JSON.parse(Buffer.from(data, 'base64').toString('utf8'))
   }
 
   private encode<T extends object>(data: T): Uint8Array {

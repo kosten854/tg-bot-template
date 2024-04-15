@@ -91,8 +91,6 @@ const bootstrap = async (): Promise<void> => {
 
   // Telegram bot
   const bot = new TelegramBot(configService.telegramBotToken, configService.telegramBotOptions)
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  await bot.api.setWebhook(`${configService.telegramWebhookUrl}/telegram/webhook`, {secret_token: configService.telegramWebhookSecret})
   appContainer
     .bind<TelegramBot>(InversifyTypes.TELEGRAM_BOT)
     .toConstantValue(bot)
@@ -101,6 +99,12 @@ const bootstrap = async (): Promise<void> => {
 
   const botUpdate = appContainer.get<TelegramUpdate>(TelegramUpdate)
   botUpdate.init()
+
+  void (
+    configService.telegramWebhookSecret && configService.telegramWebhookUrl
+      ? bot.api.setWebhook(`${configService.telegramWebhookUrl}/telegram/webhook`, {secret_token: configService.telegramWebhookSecret})
+      : bot.start()
+  )
 
   const natsService = appContainer.get<NatsService>(NatsService)
   void natsService.runWorker()

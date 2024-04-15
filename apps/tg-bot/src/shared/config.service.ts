@@ -65,11 +65,11 @@ export class ConfigService extends BaseConfigService {
     return {}
   }
 
-  public get telegramWebhookSecret(): string {
-    return this.getRequired('TELEGRAM_WEBHOOK_SECRET')
+  public get telegramWebhookSecret(): string | undefined {
+    return this.get('TELEGRAM_WEBHOOK_SECRET')
   }
 
-  public get telegramWebhookUrl(): string {
-    return this.getRequired('TELEGRAM_WEBHOOK_URL')
+  public get telegramWebhookUrl(): string | undefined {
+    return this.get('TELEGRAM_WEBHOOK_URL')
   }
 }

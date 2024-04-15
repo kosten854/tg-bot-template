@@ -59,15 +59,8 @@ export class TelegramUpdate {
     }
     await match(ctx.message.text?.toLowerCase())
       .with('hello', 'привет', 'hi', 'здравствуйте', async () => {
-        await ctx.replyQueue('*Hello*, world!', {
+        await ctx.replyQueue('*Hello*, мир!', {
           parse_mode: 'Markdown',
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {text: 'Click me', url: 'https://ya.ru'},
-              ],
-            ],
-          },
         })
       })
       .otherwise(async () => {
