@@ -84,9 +84,9 @@ services:
   #     TG_BOT_NATS_DEBUG: true
   #     # TG_BOT_NATS_DEBUG=false
   #     # TELEGRAM
-  #     TG_BOT_TELEGRAM_BOT_TOKEN: 7020962157:AAFbXjGnWcU4LTVyHlA-nZ4Px1xd7XetPJk
-  #     TG_BOT_TELEGRAM_WEBHOOK_SECRET: epaa4khhsg72288i82vpcch7jux
-  #     TG_BOT_TELEGRAM_WEBHOOK_URL: https://telegram.johnsmith.keenetic.pro
+  #     TG_BOT_TELEGRAM_BOT_TOKEN: 
+  #     TG_BOT_TELEGRAM_WEBHOOK_SECRET: 
+  #     TG_BOT_TELEGRAM_WEBHOOK_URL: 
 
   #   ports:
   #     - 3000:3000
